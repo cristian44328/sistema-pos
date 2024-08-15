@@ -65,6 +65,67 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Clientes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="VCliente" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Lista de Clientes</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Productos
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="vUsuarios" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Lista de Productos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Ventas
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="vUsuarios" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Emitir Factura</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="inicio" class="nav-link">
+              <i class="fas fa-door-open nav-icon"></i>
+                 <p>Salir</p>
+            </a>
+          </li>
          
         </ul>
       </nav>
