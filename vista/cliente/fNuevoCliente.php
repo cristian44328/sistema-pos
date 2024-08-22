@@ -7,16 +7,28 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="">Login Usuario</label>
-      <input type="text" name="login" class="form-control" id="login">
+      <label for="">Razon Social</label>
+      <input type="text" name="razon_social" class="form-control" id="razon_social">
     </div>
     <div class="form_group">
-      <label for="">Password</label>
-      <input type="password" name="password" class="form-control" id="password">
+      <label for="">Nit ci</label>
+      <input type="text" name="nit" class="form-control" id="nit">
     </div>
     <div class="form-group">
-      <label for="">Repetir Password</label>
-      <input type="password" name="vrPassword" class="form-control" id="vrPassword">
+      <label for="">Direccion</label>
+      <input type="text" name="direccion" class="form-control" id="direccion">
+    </div>
+    <div class="form-group">
+      <label for="">Nombre</label>
+      <input type="text" name="nombre" class="form-control" id="nombre">
+    </div>
+    <div class="form-group">
+      <label for="">Telefono</label>
+      <input type="text" name="telefono" class="form-control" id="telefono">
+    </div>
+    <div class="form-group">
+      <label for="">Email</label>
+      <input type="email" name="email" class="form-control" id="email">
     </div>
   </div>
   <div class="modal-footer justify-content-between">
@@ -29,23 +41,23 @@
 $(function () {
   $.validator.setDefaults({
     submitHandler: function () {
-      regUsuario()
+      regCliente()
     }
   });
 
-  $('#FRegUsuario').validate({
+  $('#FRegCliente').validate({
     rules: {
-      login: {
+      razon_social: {
         required: true,
-      minlength: 4
+        minlength: 3
       },
-      password: {
+      nit: {
         required: true,
-        minlength: 4
+        minlength: 3
       },
-      vrPassword: {
+      direccion: {
         required: true,
-        minlength: 4
+        minlength: 3
       },
     },
     

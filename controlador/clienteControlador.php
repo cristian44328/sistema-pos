@@ -22,18 +22,21 @@ class ControladorCliente{
     static public function ctrRegCliente(){
 
         require "../modelo/clienteModelo.php";
-        $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
 
         $data=array(
-            "loginCliente"=>$_POST["login"],
-            "password"=>$password,
-            "perfil"=>"Moderador"
+            "razon_social"=>$_POST["razon_social"],
+            "nit"=>$_POST["nit"],
+            "direccion"=>$_POST["direccion"],
+            "nombre"=>$_POST["nombre"],
+            "telefono"=>$_POST["telefono"],
+            "email"=>$_POST["email"]
+
         );
 
         //var_dump($data);
         $respuesta=ModeloCliente::mdlRegCliente($data);
         echo $respuesta;
-        
+    
     }
     static public function ctrInfoCliente($id){
         $respuesta=ModeloCliente::mdlInfoCliente($id);

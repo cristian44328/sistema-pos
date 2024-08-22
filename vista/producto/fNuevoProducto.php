@@ -1,23 +1,40 @@
-<form action="" id="FRegUsuario">
+<form action="" id="FRegProducto">
   <div class="modal-header bg-success">
-    <h4 class="modal-title">Registro nuevo Usuario</h4>
+    <h4 class="modal-title">Registro nuevo Producto</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="">Login Usuario</label>
-      <input type="text" name="login" class="form-control" id="login">
-    </div>
-    <div class="form_group">
-      <label for="">Password</label>
-      <input type="password" name="password" class="form-control" id="password">
+      <label for="">Cod - Producto</label>
+      <input type="text" name="cod_producto" class="form-control" id="cod_producto">
     </div>
     <div class="form-group">
-      <label for="">Repetir Password</label>
-      <input type="password" name="vrPassword" class="form-control" id="vrPassword">
+      <label for="">Cod-Producto-Sin</label>
+      <input type="text" name="producto_sin" class="form-control" id="producto_sin">
     </div>
+    <div class="form-group">
+      <label for="">Nombre</label>
+      <input type="text" name="nombre_p" class="form-control" id="nombre_p">
+    </div>
+    <div class="form-group">
+      <label for="">Precio</label>
+      <input type="text" name="precio" class="form-control" id="precio">
+    </div>
+    <div class="form-group">
+      <label for="">Unidad de Medida</label>
+      <input type="text" name="medida" class="form-control" id="medida">
+    </div>
+    <div class="form-group">
+      <label for="">Unidad de medidad Sin</label>
+      <input type="text" name="medida_sin" class="form-control" id="medida_sin">
+    </div>
+    <div class="form-group">
+      <label for="">Imagen</label>
+      <input type="text" name="imagen" class="form-control" id="imagen">
+    </div>
+
   </div>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -29,11 +46,11 @@
 $(function () {
   $.validator.setDefaults({
     submitHandler: function () {
-      regUsuario()
+      regProducto()
     }
   });
 
-  $('#FRegUsuario').validate({
+  $('#FRegProducto').validate({
     rules: {
       login: {
         required: true,

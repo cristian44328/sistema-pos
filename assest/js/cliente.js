@@ -26,7 +26,9 @@ function regCliente(){
             processData:false,
             success:function(data){
 
-              if(data="ok"){
+                console.log(data)
+
+              if(data == "ok"){
 
                 Swal.fire({
                     title: "Cliente registrado",
@@ -112,7 +114,7 @@ function editCliente(id){
     
 }
 
-function MEliUsuario(id){
+function MEliCliente(id){
 
     var obj={
         id:id

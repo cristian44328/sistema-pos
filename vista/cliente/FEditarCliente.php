@@ -1,64 +1,50 @@
 <?php
-require_once "../../controlador/usuarioControlador.php";
-require_once "../../modelo/usuarioModelo.php";
+require_once "../../controlador/clienteControlador.php";
+require_once "../../modelo/clienteModelo.php";
 
 $id = $_GET["id"];
 
-$usuario = ControladorUsuario::ctrInfoUsuario($id);
+$cliente = ControladorCliente::ctrInfoCliente($id);
 
 ?>
-<form action="" id="FEditUsuario">
+<form action="" id="FEditCliente">
   <div class="modal-header bg-success">
-    <h4 class="modal-title">Registro nuevo Usuario</h4>
+    <h4 class="modal-title">Registro nuevo Cliente</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="">Login Usuario</label>
-      <input type="text" name="login" class="form-control" id="login" value="<?php echo $usuario["login_usuario"]; ?>"
-        readonly>
-      <input type="hidden" name="idUsuario" value="<?php echo $usuario["id_usuario"];?>">
+      <label for="">Razon social</label>
+      <input type="text" name="razon_social" class="form-control" id="razon_social" value="<?php echo $cliente["razon_social_cliente"]; ?>"
+      >
+      <input type="hidden" name="idCliente" value="<?php echo $cliente["id_cliente"];?>">
     </div>
     <div class="form_group">
-      <label for="">Password</label>
-      <input type="password" name="password" class="form-control" id="password"
-        value="<?php echo $usuario["password"]; ?>">
+      <label for="">Nit</label>
+      <input type="text" name="nit" class="form-control" id="nit"
+        value="<?php echo $cliente["nit_ci_cliente"]; ?>">
     </div>
     <div class="form-group">
-      <label for="">Repetir Password</label>
-      <input type="password" name="vrPassword" class="form-control" id="vrPassword"
-        value="<?php echo $usuario["password"]; ?>">
-      <input type="hidden" value="<?php echo $usuario["password"]; ?>" class="passActual">
+      <label for="">Direccion</label>
+      <input type="text" name="direccion" class="form-control" id="direccion"
+        value="<?php echo $cliente["direccion_cliente"]; ?>">
     </div>
     <div class="form-group">
-      <label for="">Perfil</label>
-      <select name="perfil" class="form-control" id="perfil">
-        <option value="Administrador" <?php if ($usuario["perfil"] == "Administrador"): ?>selected<?php endif; ?>>
-          Administrador</option>
-        <option value="Moderador" <?php if ($usuario["perfil"] == "Moderador"): ?>selected<?php endif; ?>>Moderador
-        </option>
-      </select>
+      <label for="">Nombre</label>
+      <input type="text" name="nombre" class="form-control" id="nombre"
+        value="<?php echo $cliente["nombre_cliente"]; ?>">
     </div>
     <div class="form-group">
-      <label for="">Estado</label>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="estadoActivo" name="estado" <?php if ($usuario["estado"] == "1"): 
-              ?>checked<?php endif; ?> value="1">
-            <label for="estadoActivo" class="custom-control-label">Activo</label>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="estadoInactivo" name="estado" <?php if ($usuario["estado"] == "0"): 
-              ?>checked<?php endif; ?> value="0">
-            <label for="estadoInactivo" class="custom-control-label">Inactivo</label>
-          </div>
-        </div>
-      </div>
+      <label for="">Telefono</label>
+      <input type="text" name="telefono" class="form-control" id="telefono"
+        value="<?php echo $cliente["telefono_cliente"]; ?>">
+    </div>
+    <div class="form-group">
+      <label for="">Email</label>
+      <input type="email" name="email" class="form-control" id="email"
+        value="<?php echo $cliente["email_cliente"]; ?>">
     </div>
   </div>
   <div class="modal-footer justify-content-between">
@@ -71,22 +57,25 @@ $usuario = ControladorUsuario::ctrInfoUsuario($id);
   $(function () {
     $.validator.setDefaults({
       submitHandler: function () {
-        editUsuario()
+        editCliente()
       }
     });
 
-    $('#FEditUsuario').validate({
-      rules: {
-
-        password: {
-          required: true,
-          minlength: 4
-        },
-        vrPassword: {
-          required: true,
-          minlength: 4
-        },
+    $('#FRegCliente').validate({
+    rules: {
+      razon_social: {
+        required: true,
+        minlength: 3
       },
+      nit: {
+        required: true,
+        minlength: 3
+      },
+      direccion: {
+        required: true,
+        minlength: 3
+      },
+    },
 
       errorElement: 'span',
       errorPlacement: function (error, element) {
