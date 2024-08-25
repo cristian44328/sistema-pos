@@ -12,12 +12,18 @@ class ModeloProducto{
 
     }
     static public function mdlRegProducto($data){
-        $loginProducto=$data["loginProducto"];
-        $password=$data["password"];
-        $perfil=$data["perfil"];
+        $cod_pro=$data["cod_Producto"];
+        $cod_pro_sin=$data["producto_sin"];
+        $nom_pro=$data["nombre_p"];
+        $precio=$data["precio"];
+        $medida=$data["medida"];
+        $medida_sin=$data["medida_sin"];
+        $imagen=$data["imagen"];
+        
 
-        $stmt=Conexion::conectar()->prepare("insert into producto(login_Producto, password, perfil)
-        values('$loginProducto', '$password', '$perfil')");
+        $stmt=Conexion::conectar()->prepare("insert into producto(cod_producto, cod_producto_sin, nombre_producto, precio_producto,
+        unidad_medida, unidad_medida_sin, imagen_producto)
+        values('$cod_pro', '$cod_pro_sin', '$nom_pro', '$precio', '$medida', '$medida_sin', '$imagen')");
 
         if($stmt->execute()){
             return "ok";
@@ -31,14 +37,22 @@ class ModeloProducto{
 
         return $stmt->fetch();
     }
+
     static public function mdlEditProducto($data){
-        $password=$data["password"];
-        $perfil=$data["perfil"];
-        $estado=$data["estado"];
+
+        $cod_pro=$data["cod_Producto"];
+        $cod_pro_sin=$data["producto_sin"];
+        $nom_pro=$data["nombre_p"];
+        $precio=$data["precio"];
+        $medida=$data["medida"];
+        $medida_sin=$data["medida_sin"];
+        $imagen=$data["imagen"];
+        $disponible=$data["disponible"];
         $id=$data["id"];
 
-        $stmt=Conexion::conectar()->prepare("update producto set password='$password', perfil='$perfil', estado='$estado'
-        where id_producto=$id");
+        $stmt=Conexion::conectar()->prepare("update producto set cod_producto='$cod_pro', cod_producto_sin='$cod_pro_sin',
+        nombre_producto='$nom_pro', precio_producto='$precio', unidad_medida='$medida', unidad_medida_sin='$medida_sin', 
+        imagen_producto='$imagen', disponible='$disponible' where id_producto=$id");
 
         if($stmt->execute()){
             return "ok";
@@ -57,4 +71,5 @@ class ModeloProducto{
         }
     }
 
+    
 }

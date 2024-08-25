@@ -68,7 +68,7 @@
 
           <li class="nav-item ">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-handshake"></i>
               <p>
                 Clientes
                 <i class="right fas fa-angle-left"></i>
@@ -86,7 +86,7 @@
 
           <li class="nav-item ">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-boxes"></i>
               <p>
                 Productos
                 <i class="right fas fa-angle-left"></i>
@@ -112,9 +112,26 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="vUsuarios" class="nav-link">
+                <a href="VFactura" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Emitir Factura</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Pokemon
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="VFactura" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipos de Pokemon</p>
                 </a>
               </li>
             </ul>

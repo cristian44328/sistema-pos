@@ -9,7 +9,7 @@ $cliente = ControladorCliente::ctrInfoCliente($id);
 ?>
 <form action="" id="FEditCliente">
   <div class="modal-header bg-success">
-    <h4 class="modal-title">Registro nuevo Cliente</h4>
+    <h4 class="modal-title">Editar Cliente</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -61,19 +61,19 @@ $cliente = ControladorCliente::ctrInfoCliente($id);
       }
     });
 
-    $('#FRegCliente').validate({
+    $('#FEditCliente').validate({
     rules: {
       razon_social: {
         required: true,
-        minlength: 3
+        minlength: 1
       },
       nit: {
         required: true,
-        minlength: 3
+        minlength: 1
       },
       direccion: {
         required: true,
-        minlength: 3
+        minlength: 1
       },
     },
 

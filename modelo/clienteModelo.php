@@ -37,12 +37,17 @@ class ModeloCliente{
         return $stmt->fetch();
     }
     static public function mdlEditCliente($data){
-        $password=$data["password"];
-        $perfil=$data["perfil"];
-        $estado=$data["estado"];
+
+        $razon=$data["razon_social"];
+        $nit=$data["nit"];
+        $direccion=$data["direccion"];
+        $nombre=$data["nombre"];
+        $telefono=$data["telefono"];
+        $email=$data["email"];
         $id=$data["id"];
 
-        $stmt=Conexion::conectar()->prepare("update cliente set password='$password', perfil='$perfil', estado='$estado'
+        $stmt=Conexion::conectar()->prepare("update cliente set razon_social_cliente='$razon', nit_ci_cliente='$nit',
+        direccion_cliente='$direccion', nombre_cliente='$nombre', telefono_cliente='$telefono', email_cliente='$email' 
         where id_cliente=$id");
 
         if($stmt->execute()){

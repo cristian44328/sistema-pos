@@ -26,7 +26,7 @@ function regCliente(){
             processData:false,
             success:function(data){
 
-                console.log(data)
+            console.log(data)
 
               if(data == "ok"){
 
@@ -68,14 +68,13 @@ function MEditCliente(id){
             $("#content-default").html(data)
         }
     })
+    
 
 }
 
 function editCliente(id){
 
     var formData=new FormData($("#FEditCliente")[0])
-
-    if(formData.get("password")==formData.get("vrPassword")){
 
         $.ajax({
             type:"POST",
@@ -85,8 +84,9 @@ function editCliente(id){
             contentType:false,
             processData:false,
             success:function(data){
-
-              if(data="ok"){
+               //console.log(data)
+               
+              if(data == "ok"){
 
                 Swal.fire({
                     title: "Cliente Actualizado",
@@ -110,8 +110,6 @@ function editCliente(id){
 
             }
         })
-    }
-    
 }
 
 function MEliCliente(id){

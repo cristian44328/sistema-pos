@@ -53,7 +53,17 @@
                             <td> <?php echo $value["unidad_medida"];?> </td>
                             <td> <?php echo $value["unidad_medida_sin"];?> </td>
                             <td> <?php echo $value["imagen_producto"];?> </td>
-                            <td> <?php echo $value["disponible"];?> </td>
+                            <td> <?php 
+                            if($value["disponible"]){
+                              ?>
+                              <span class="badge badge-success">disponible</span>
+                              <?php
+                            }else{
+                              ?>
+                              <span class="badge badge-danger">no disponible</span>
+                              <?php
+                            }
+                            ?> </td>
                             <td>
                               <div class="btn-group">
                                 <button class="btn btn-secondary" onclick="MEditProducto(<?php echo $value["id_producto"];?>)">

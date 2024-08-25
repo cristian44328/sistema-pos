@@ -21,12 +21,16 @@ class ControladorProducto{
     static public function ctrRegProducto(){
 
         require "../modelo/productoModelo.php";
-        $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
 
         $data=array(
-            "loginProducto"=>$_POST["login"],
-            "password"=>$password,
-            "perfil"=>"Moderador"
+            "cod_Producto"=>$_POST["cod_producto"],
+            "producto_sin"=>$_POST["producto_sin"],
+            "nombre_p"=>$_POST["nombre_p"],
+            "precio"=>$_POST["precio"],
+            "medida"=>$_POST["medida"],
+            "medida_sin"=>$_POST["medida_sin"],
+            "imagen"=>$_POST["imagen"],
+            "disponible"=>$_POST["disponible"]
         );
 
         //var_dump($data);
@@ -41,19 +45,18 @@ class ControladorProducto{
     static public function ctrEditProducto(){
 
         require "../modelo/productoModelo.php";
-
-        if($_POST["password"]==$_POST["passActual"]){
-            $password=$_POST["passActual"];
-        }else{
-            $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
-        }
-
         
         $data=array(
-            "password"=>$password,
-            "id"=>$_POST["idProducto"],
-            "perfil"=>$_POST["perfil"],
-            "estado"=>$_POST["estado"]
+
+            "cod_Producto"=>$_POST["cod_producto"],
+            "producto_sin"=>$_POST["producto_sin"],
+            "nombre_p"=>$_POST["nombre_p"],
+            "precio"=>$_POST["precio"],
+            "medida"=>$_POST["medida"],
+            "medida_sin"=>$_POST["medida_sin"],
+            "imagen"=>$_POST["imagen"],
+            "disponible"=>$_POST["disponible"],
+            "id"=>$_POST["idProducto"]
         );
 
         //var_dump($data);

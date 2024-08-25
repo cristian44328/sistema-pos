@@ -21,12 +21,17 @@ class ControladorFactura{
     static public function ctrRegFactura(){
 
         require "../modelo/facturaModelo.php";
-        $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
 
         $data=array(
-            "loginFactura"=>$_POST["login"],
-            "password"=>$password,
-            "perfil"=>"Moderador"
+            "codFactura"=>$_POST["codFactura"],
+            "cliente"=>$_POST["cliente"],
+            "detalle"=>$_POST["detalle"],
+            "neto"=>$_POST["neto"],
+            "descuento"=>$_POST["descuento"],
+            "total"=>$_POST["total"],
+            "puntoVenta"=>$_POST["puntoVenta"],
+            "usuario"=>$_POST["usuario"],
+            "leyenda"=>$_POST["leyenda"]
         );
 
         //var_dump($data);
@@ -41,19 +46,19 @@ class ControladorFactura{
     static public function ctrEditFactura(){
 
         require "../modelo/facturaModelo.php";
-
-        if($_POST["password"]==$_POST["passActual"]){
-            $password=$_POST["passActual"];
-        }else{
-            $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
-        }
-
         
         $data=array(
-            "password"=>$password,
-            "id"=>$_POST["idFactura"],
-            "perfil"=>$_POST["perfil"],
-            "estado"=>$_POST["estado"]
+            "codFactura"=>$_POST["codFactura"],
+            "cliente"=>$_POST["cliente"],
+            "detalle"=>$_POST["detalle"],
+            "neto"=>$_POST["neto"],
+            "descuento"=>$_POST["descuento"],
+            "total"=>$_POST["total"],
+            "puntoVenta"=>$_POST["puntoVenta"],
+            "usuario"=>$_POST["usuario"],
+            "leyenda"=>$_POST["leyenda"],
+            "id"=>$_POST["idFactura"]
+            
         );
 
         //var_dump($data);

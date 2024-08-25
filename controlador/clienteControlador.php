@@ -42,25 +42,23 @@ class ControladorCliente{
         $respuesta=ModeloCliente::mdlInfoCliente($id);
         return $respuesta;
     }
+
     static public function ctrEditCliente(){
 
         require "../modelo/clienteModelo.php";
-
-        if($_POST["password"]==$_POST["passActual"]){
-            $password=$_POST["passActual"];
-        }else{
-            $password=password_hash($_POST["password"], PASSWORD_DEFAULT);
-        }
-
         
         $data=array(
-            "password"=>$password,
-            "id"=>$_POST["idCliente"],
-            "perfil"=>$_POST["perfil"],
-            "estado"=>$_POST["estado"]
+            
+            "razon_social"=>$_POST["razon_social"],
+            "nit"=>$_POST["nit"],
+            "direccion"=>$_POST["direccion"],
+            "nombre"=>$_POST["nombre"],
+            "telefono"=>$_POST["telefono"],
+            "email"=>$_POST["email"],
+            "id"=>$_POST["idCliente"]
         );
 
-        //var_dump($data);
+       // var_dump($data);
         ModeloCliente::mdlEditCliente($data);
         $respuesta=ModeloCliente::mdlEditCliente($data);
         echo $respuesta; 

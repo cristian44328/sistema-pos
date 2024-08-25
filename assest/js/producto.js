@@ -25,8 +25,9 @@ function regProducto(){
             contentType:false,
             processData:false,
             success:function(data){
+                console.log(data)
 
-              if(data == "ok"){
+              if(data = "ok"){
 
                 Swal.fire({
                     title: "Producto registrado",
@@ -81,6 +82,8 @@ function editProducto(id){
             contentType:false,
             processData:false,
             success:function(data){
+
+                console.log(data)
 
               if(data == "ok"){
 

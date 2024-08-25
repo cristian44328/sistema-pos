@@ -1,40 +1,47 @@
-<form action="" id="FRegProducto">
+<form action="" id="FRegFactura">
   <div class="modal-header bg-success">
-    <h4 class="modal-title">Registro nuevo Producto</h4>
+    <h4 class="modal-title">Registro nueva Factura</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="">Cod - Producto</label>
-      <input type="text" name="cod_producto" class="form-control" id="cod_producto">
+      <label for="">Cod Factura</label>
+      <input type="text" name="codFactura" class="form-control" id="codFactura">
     </div>
     <div class="form-group">
-      <label for="">Cod-Producto-Sin</label>
-      <input type="text" name="producto_sin" class="form-control" id="producto_sin">
+      <label for="">Cliente</label>
+      <input type="text" name="cliente" class="form-control" id="cliente">
     </div>
     <div class="form-group">
-      <label for="">Nombre</label>
-      <input type="text" name="nombre_p" class="form-control" id="nombre_p">
+      <label for="">Detalle</label>
+      <input type="text" name="detalle" class="form-control" id="detalle">
     </div>
     <div class="form-group">
-      <label for="">Precio</label>
-      <input type="text" name="precio" class="form-control" id="precio">
+      <label for="">Neto</label>
+      <input type="text" name="neto" class="form-control" id="neto">
     </div>
     <div class="form-group">
-      <label for="">Unidad de Medida</label>
-      <input type="text" name="medida" class="form-control" id="medida">
+      <label for="">Descuento</label>
+      <input type="text" name="descuento" class="form-control" id="descuento">
     </div>
     <div class="form-group">
-      <label for="">Unidad de medidad Sin</label>
-      <input type="text" name="medida_sin" class="form-control" id="medida_sin">
+      <label for="">Total</label>
+      <input type="text" name="total" class="form-control" id="total">
     </div>
     <div class="form-group">
-      <label for="">Imagen</label>
-      <input type="text" name="imagen" class="form-control" id="imagen">
+      <label for="">Punto de venta</label>
+      <input type="text" name="puntoVenta" class="form-control" id="puntoVenta">
     </div>
-
+    <div class="form-group">
+      <label for="">Usuario</label>
+      <input type="text" name="usuario" class="form-control" id="usuario">
+    </div>
+    <div class="form-group">
+      <label for="">Leyenda</label>
+      <input type="text" name="leyenda" class="form-control" id="leyenda">
+    </div>
   </div>
   <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -46,23 +53,23 @@
 $(function () {
   $.validator.setDefaults({
     submitHandler: function () {
-      regProducto()
+      regFactura()
     }
   });
 
-  $('#FRegProducto').validate({
+  $('#FRegFactura').validate({
     rules: {
-      cod_producto: {
+      login: {
         required: true,
-        minlength: 3
+      minlength: 4
       },
-      producto_sin: {
+      password: {
         required: true,
-        minlength: 1
+        minlength: 4
       },
-      nombre_p: {
+      vrPassword: {
         required: true,
-        minlength: 3
+        minlength: 4
       },
     },
     
