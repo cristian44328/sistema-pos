@@ -5,8 +5,6 @@
     <div class="content-header">
       <div class="container-fluid">
 
-      asdk
-
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -23,15 +21,11 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>#</th>
-                    <th>cod_Producto</th>
-                    <th>cod_Producto_Sin</th>
-                    <th>Nombre</th>
+                    <th>Cod. Producto</th>
+                    <th>Descripcion</th>
                     <th>Precio</th>
-                    <th>unidad_medida</th>
-                    <th>unidad_medida_sin</th>
                     <th>Imagen</th>
-                    <th>Disponible</th>
+                    <th>Estado</th>
                     <td>
                       <button class="btn btn-primary" onclick="MNuevoProducto()">Nuevo</button>
                     </td>
@@ -45,14 +39,21 @@
                     foreach($producto as $value){
                         ?>
                         <tr>
-                            <td> <?php echo $value["id_producto"];?> </td>
                             <td> <?php echo $value["cod_producto"];?> </td>
-                            <td> <?php echo $value["cod_producto_sin"];?> </td>
                             <td> <?php echo $value["nombre_producto"];?> </td>
                             <td> <?php echo $value["precio_producto"];?> </td>
-                            <td> <?php echo $value["unidad_medida"];?> </td>
-                            <td> <?php echo $value["unidad_medida_sin"];?> </td>
-                            <td> <?php echo $value["imagen_producto"];?> </td>
+                            <td> <?php 
+                            if($value["imagen_producto"]==""){
+                              ?> 
+                              <img src="assest/dist/img/product_default.png" alt="" width="80" class="img-thumbnail">
+                              <?php
+                            }else{
+                              ?>
+                              <img src="assest/dist/img/productos/<?php echo $value["imagen_producto"] ?>" alt="" width="80" class="img-thumbnail">
+                              <?php
+                            }
+                            ?> </td>
+
                             <td> <?php 
                             if($value["disponible"]){
                               ?>
@@ -66,6 +67,9 @@
                             ?> </td>
                             <td>
                               <div class="btn-group">
+                                <button class="btn btn-info" onclick="MVerProducto(<?php echo $value["id_producto"];?>)">
+                                  <i class="fas fa-eye"></i>
+                                </button>
                                 <button class="btn btn-secondary" onclick="MEditProducto(<?php echo $value["id_producto"];?>)">
                                   <i class="fas fa-edit"></i>
                                 </button>

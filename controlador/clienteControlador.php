@@ -3,8 +3,10 @@
 $ruta=parse_url($_SERVER["REQUEST_URI"]);
 
 if(isset($ruta["query"])){
-    if($ruta["query"]=="ctrRegCliente"||$ruta["query"]=="ctrEditCliente"||
-    $ruta["query"]=="ctrEliCliente"){
+    if($ruta["query"]=="ctrRegCliente"||
+    $ruta["query"]=="ctrEditCliente"||
+    $ruta["query"]=="ctrEliCliente"||
+    $ruta["query"]=="ctrBusCliente"){
         $metodo=$ruta["query"];
         $cliente=new ControladorCliente();
         $cliente->$metodo();
@@ -43,6 +45,17 @@ class ControladorCliente{
         return $respuesta;
     }
 
+    static function ctrBusCliente(){
+        
+        require "../modelo/clienteModelo.php";
+
+        $nitCliente=$_POST["nitCliente"];
+
+        $respuesta=ModeloCliente::mdlBusCliente($nitCliente);
+        echo json_encode($respuesta);
+        
+    }
+
     static public function ctrEditCliente(){
 
         require "../modelo/clienteModelo.php";
@@ -65,7 +78,7 @@ class ControladorCliente{
 
     }
 
-    static public function ctrEliCliente(){
+    static function ctrEliCliente(){
         require "../modelo/clienteModelo.php";
 
         $id=$_POST["id"];

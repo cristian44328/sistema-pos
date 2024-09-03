@@ -2,7 +2,6 @@
 require_once "conexion.php";
 
 class ModeloCliente{
-
     
     static public function mdlInfoClientes(){
 
@@ -65,6 +64,14 @@ class ModeloCliente{
         }else{
             return "error";
         }
+    }
+
+    static public function mdlBusCliente($nitCliente){
+
+        $stmt=Conexion::conectar()->prepare("select * from cliente where nit_ci_cliente=$nitCliente");
+        $stmt->execute();
+
+        return $stmt->fetch();
     }
 
 }

@@ -8,6 +8,9 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+      <li class="nav-item nav-link">
+        <span class="badge badge-danger" id="comunSiat">Desconectado</span>
+      </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -100,6 +103,14 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="SinCatalogos" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sincronizacion Catalogos</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-item ">
@@ -112,7 +123,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="VFactura" class="nav-link">
+                <a href="FormVenta" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Emitir Factura</p>
                 </a>

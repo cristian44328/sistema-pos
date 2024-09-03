@@ -22,7 +22,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        ga
+        INICIO
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

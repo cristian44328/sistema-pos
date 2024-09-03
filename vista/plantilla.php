@@ -28,7 +28,8 @@ if(isset($_GET["ruta"])){
   $_GET["ruta"]=="salir"||
   $_GET["ruta"]=="VCliente"||
   $_GET["ruta"]=="VProducto"||
-  $_GET["ruta"]=="VFactura"||
+  $_GET["ruta"]=="SinCatalogos"||
+  $_GET["ruta"]=="FormVenta"||
   $_GET["ruta"]=="vUsuarios"){
 
     include "asideMenu.php";

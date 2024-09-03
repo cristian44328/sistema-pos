@@ -12,6 +12,7 @@ class ModeloProducto{
 
     }
     static public function mdlRegProducto($data){
+        
         $cod_pro=$data["cod_Producto"];
         $cod_pro_sin=$data["producto_sin"];
         $nom_pro=$data["nombre_p"];
@@ -40,7 +41,6 @@ class ModeloProducto{
 
     static public function mdlEditProducto($data){
 
-        $cod_pro=$data["cod_Producto"];
         $cod_pro_sin=$data["producto_sin"];
         $nom_pro=$data["nombre_p"];
         $precio=$data["precio"];
@@ -50,7 +50,7 @@ class ModeloProducto{
         $disponible=$data["disponible"];
         $id=$data["id"];
 
-        $stmt=Conexion::conectar()->prepare("update producto set cod_producto='$cod_pro', cod_producto_sin='$cod_pro_sin',
+        $stmt=Conexion::conectar()->prepare("update producto set cod_producto_sin='$cod_pro_sin',
         nombre_producto='$nom_pro', precio_producto='$precio', unidad_medida='$medida', unidad_medida_sin='$medida_sin', 
         imagen_producto='$imagen', disponible='$disponible' where id_producto=$id");
 
@@ -71,5 +71,12 @@ class ModeloProducto{
         }
     }
 
+    static public function mdlBusProducto($codProducto){
+
+        $stmt=Conexion::conectar()->prepare("select * from producto where cod_producto='$codProducto'");
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
     
 }
