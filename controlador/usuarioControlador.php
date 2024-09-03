@@ -23,14 +23,29 @@ class ControladorUsuario{
 
             $resultado=ModeloUsuario::mdlAccesoUsuario($usuario);
 
-            if($resultado["login_usuario"]==$usuario && $resultado["password"]==$password && $resultado["estado"]==1){
+            if($resultado["login_usuario"]==$usuario && password_verify($password, $resultado["password"]) && $resultado["estado"]==1){
 
-                echo '<script>
+                $_SESSION["login"]=$resultado["login_usuario"];
+                $_SESSION["perfil"]=$resultado["perfil"];
+                $_SESSION["idUsuario"]=$resultado["idUsuario"];
+                $_SESSION["ingreso"]="ok";
+                
+                date_default_timezone_set("America/La_Paz");
+                $fecha=date("Y-m-d");
+                $hora=date("H-i-s");
 
-                window.location="inicio";
+                $fechaHora= $fecha." ".$hora;
+                $id=$resultado["id_usuario"];
 
+                $ultimoLogin = ModeloUsuario::mdlActualizarAcceso($fechaHora, $id);
+
+                if ($ultimoLogin == "ok") {
+
+                echo '<script> 
+                    window.location="inicio"; 
                 </script>';
-            }
+                }
+          }
         }
     }
     static public function ctrInfoUsuarios(){
