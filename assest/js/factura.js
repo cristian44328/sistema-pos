@@ -7,6 +7,9 @@ var token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmppY2hvMzMiLCJj
 var rsEmpresa="NEOMAC SRL"
 var telEmpresa="9422560"
 var dirEmpresa="Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV: 0135 MZA: 007"
+var cufd="";
+var codigoControlCufd="";
+var fechaVigCufd="";
 
 function MNuevoFactura(){
 
@@ -300,6 +303,93 @@ function calcularTotal(){
 }
 
 /*===============
+Obtencion de Cuf
+================*/
+
+function solicitudCufd(){
+    var obj={
+        codigoAmbiente:2,
+        codigoModalidad:2,
+        codigoPuntoVenta:0,
+        codigoPuntoVentaSpecified:true,
+        codigoSistema:codSistema,
+        codigoSucursal:0,
+        nit:nitEmpresa,
+        cuis:cuis
+    }
+    
+    $.ajax({
+        type:"POST",
+        url:host+"api/Codigos/solicitudCufd?token="+token,
+        data:JSON.stringify(obj),
+        cache:false,
+        contentType:"application/json",
+        success:function(data){
+            //console.log(data)
+            cufd=data["codigo"]
+            codigoControlCufd=data["codigoControl"]
+            fechaVigCufd=data["fechaVigencia"]
+        }
+    })
+    
+}
+
+/*===============
+Registrar nuevo Cufd
+================*/
+function registrarNuevoCufd(){
+    
+    var obj={
+        "cufd":cufd,
+        "fechaVigCufd":fechaVigCufd,
+        "codControlCufd":codigoControlCufd
+    }
+
+    $.ajax({
+        type:"POST",
+        data:obj,
+        url:"controlador/facturaControlador.php?ctrNuevoCufd",
+        cache:false,
+        success:function(data){
+            console.log(data)
+        }
+    })
+}
+
+/*===============
+Verificar vigencia Cufd
+================*/
+function verificarVigenciaCufd(){
+    //fecha actual
+    let date=new Date()
+    //obtener el ultimo registro cufd de DB
+    var obj=""
+    $.ajax({
+        type:"POST",
+        url:"controlador/facturaControlador.php?ctrUltimoCufd",
+        data:obj,
+        cache:false,
+        dataType:"json",
+        success:function(data){
+            //fecha del ultimo cufd de mi db
+            let vigCufdActual=new Date(data["fecha_vigencia"])
+            //console.log(vigCufdActual)
+            if(date.getTime()>vigCufdActual.getTime()){
+                $("#panelInfo").before("<span class='text-warning'>Cufd caducado!!!</span><br>")
+                $("#panelInfo").before("<span>Registrando Cufd</span><br>")
+                //registrarNuevoCufd()
+            }else{
+                $("#panelInfo").before("<span>Cufd vigente, Puede Facturar</span><br>")
+                
+                /*cufd=data["codigo_cufd"]
+                codControlCufd=data["codigo_control"]
+                fechaVigCufd=data["fecha_vigencia"]*/
+            }       
+        }
+    })
+}
+
+/*===============
 Emitir factura 
 ================*/
 
@@ -349,9 +439,24 @@ function emitirFactura(){
                 direccion:dirEmpresa,
                 codigoPuntoVenta:0,
                 fechaEmision:fechaFactura,
-                nombreRazonSocial:rsCliente
+                nombreRazonSocial:rsCliente,
+                codigoTipoDocumentoIdentidad:tpDocumento,
+                numeroDocumento:nitCliente,
+                complemento:"",
+                codigoCliente:nitCliente,
+                codigoMetodoPago:metPago,
+                numeroTarjeta:null,
+                montoTotal:subtotal,
+                montoTotalSujetoIva:totApagar,
+                montoGiftCard:0,
+                descuentoAdicional:descAdicional,
+                codigoExcepcion:"0",
+                cafc:null,
+                leyenda:"",
+                usuario:usuarioLogin,
+                codigoDocumentoSector:1
             },
-            detalle:{}
+            detalle:arregloCarrito
         }
     }
 }
