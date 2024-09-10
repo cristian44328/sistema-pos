@@ -10,6 +10,7 @@ var dirEmpresa="Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERR
 var cufd="";
 var codigoControlCufd="";
 var fechaVigCufd="";
+var leyenda="";
 
 function MNuevoFactura(){
 
@@ -307,31 +308,36 @@ Obtencion de Cuf
 ================*/
 
 function solicitudCufd(){
-    var obj={
-        codigoAmbiente:2,
-        codigoModalidad:2,
-        codigoPuntoVenta:0,
-        codigoPuntoVentaSpecified:true,
-        codigoSistema:codSistema,
-        codigoSucursal:0,
-        nit:nitEmpresa,
-        cuis:cuis
-    }
-    
-    $.ajax({
-        type:"POST",
-        url:host+"api/Codigos/solicitudCufd?token="+token,
-        data:JSON.stringify(obj),
-        cache:false,
-        contentType:"application/json",
-        success:function(data){
-            //console.log(data)
-            cufd=data["codigo"]
-            codigoControlCufd=data["codigoControl"]
-            fechaVigCufd=data["fechaVigencia"]
+
+    return new Promise((resolve, reject)=>{
+        var obj={
+            codigoAmbiente:2,
+            codigoModalidad:2,
+            codigoPuntoVenta:0,
+            codigoPuntoVentaSpecified:true,
+            codigoSistema:codSistema,
+            codigoSucursal:0,
+            nit:nitEmpresa,
+            cuis:cuis
         }
+        
+        $.ajax({
+            type:"POST",
+            url:host+"api/Codigos/solicitudCufd?token="+token,
+            data:JSON.stringify(obj),
+            cache:false,
+            contentType:"application/json",
+            success:function(data){
+                //console.log(data)
+                cufd=data["codigo"]
+                codigoControlCufd=data["codigoControl"]
+                fechaVigCufd=data["fechaVigencia"]
+
+                resolve(cufd)
+                
+            }
+        })
     })
-    
 }
 
 /*===============
@@ -339,19 +345,27 @@ Registrar nuevo Cufd
 ================*/
 function registrarNuevoCufd(){
     
-    var obj={
-        "cufd":cufd,
-        "fechaVigCufd":fechaVigCufd,
-        "codControlCufd":codigoControlCufd
-    }
-
-    $.ajax({
-        type:"POST",
-        data:obj,
-        url:"controlador/facturaControlador.php?ctrNuevoCufd",
-        cache:false,
-        success:function(data){
-            console.log(data)
+    solicitudCufd().then(ok=>{
+        if(ok!="" || ok!=null){
+            var obj={
+                "cufd":cufd,
+                "fechaVigCufd":fechaVigCufd,
+                "codControlCufd":codigoControlCufd
+            }
+        
+            $.ajax({
+                type:"POST",
+                data:obj,
+                url:"controlador/facturaControlador.php?ctrNuevoCufd",
+                cache:false,
+                success:function(data){
+                    if(data==="ok"){
+                        $("#panelInfo").before("<span class='text-primary'>Cufd Registrado!!!</span><br>")
+                    }else{
+                        $("#panelInfo").before("<span class='text-danger'>Error!!!</span><br>")
+                    }             
+                }
+            })
         }
     })
 }
@@ -377,14 +391,31 @@ function verificarVigenciaCufd(){
             if(date.getTime()>vigCufdActual.getTime()){
                 $("#panelInfo").before("<span class='text-warning'>Cufd caducado!!!</span><br>")
                 $("#panelInfo").before("<span>Registrando Cufd</span><br>")
-                //registrarNuevoCufd()
+                registrarNuevoCufd()
             }else{
-                $("#panelInfo").before("<span>Cufd vigente, Puede Facturar</span><br>")
+                $("#panelInfo").before("<span class='text-success'>Cufd vigente, Puede Facturar</span><br>")
                 
-                /*cufd=data["codigo_cufd"]
+                cufd=data["codigo_cufd"]
                 codControlCufd=data["codigo_control"]
-                fechaVigCufd=data["fecha_vigencia"]*/
+                fechaVigCufd=data["fecha_vigencia"]
             }       
+        }
+    })
+}
+
+/*===============
+Solicitar Leyenda 
+================*/
+function extraerLeyenda(){
+    var obj=""
+    $.ajax({
+        type:"POST",
+        url:"controlador/facturaControlador.php?ctrLeyenda",
+        data:obj,
+        cache:false,
+        dataType:"json",
+        success:function(data){
+            leyenda=data["desc_leyenda"]
         }
     })
 }
@@ -418,7 +449,7 @@ function emitirFactura(){
         codigoPuntoVentaSpecified:true,
         codigoSistema:codSistema,
         codigoSucursal:0,
-        cufd:"",
+        cufd:cufd,
         cuis:cuis,
         nit:nitEmpresa,
         tipoFacturaDocumento:1,
@@ -434,7 +465,7 @@ function emitirFactura(){
                 telefono:telEmpresa,
                 numeroFactura:numFactura,
                 cuf:"String",
-                cufd:"",
+                cufd:cufd,
                 codigoSucursal:0,
                 direccion:dirEmpresa,
                 codigoPuntoVenta:0,
