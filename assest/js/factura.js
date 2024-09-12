@@ -404,6 +404,28 @@ function verificarVigenciaCufd(){
 }
 
 /*===============
+Validar Formulario
+================*/
+function validarFormulario(){
+    let numFactura=document.getElementById("numFactura").value
+    let nitCliente=document.getElementById("nitCliente").value
+    let emailCliente=document.getElementById("emailCliente").value
+    let rsCliente=document.getElementById("rsCliente").value
+
+    if(numFactura === null || numFactura.length === 0){
+        return false
+    }else if(nitCliente === null || nitCliente.length === 0){
+        return false
+    }else if(emailCliente === null || emailCliente.length === 0){
+        return false
+    }else if(rsCliente === null || rsCliente.length === 0){
+        return false
+    }
+
+    return true
+}
+
+/*===============
 Solicitar Leyenda 
 ================*/
 function extraerLeyenda(){
@@ -425,6 +447,8 @@ Emitir factura
 ================*/
 
 function emitirFactura(){
+
+    if(validarFormulario()===true){
     let date=new Date()
     let numFactura=parseInt(document.getElementById("numFactura").value)
     let fechaFactura=date.toISOString()
@@ -456,7 +480,7 @@ function emitirFactura(){
         archivo:null,
         fechaEnvio:fechaFactura,
         hashArchivo:"",
-        codigoControl:"",
+        codigoControl:codigoControlCufd,
         factura:{
             cabecera:{
                 nitEmisor:nitEmpresa,
@@ -464,7 +488,7 @@ function emitirFactura(){
                 municipio:"Santa Cruz",
                 telefono:telEmpresa,
                 numeroFactura:numFactura,
-                cuf:"String",
+                cuf:"string",
                 cufd:cufd,
                 codigoSucursal:0,
                 direccion:dirEmpresa,
@@ -479,15 +503,37 @@ function emitirFactura(){
                 numeroTarjeta:null,
                 montoTotal:subtotal,
                 montoTotalSujetoIva:totApagar,
+                codigoMoneda: 1,
+                tipoCambio: 1,
+                montoTotalMoneda:totApagar,
                 montoGiftCard:0,
                 descuentoAdicional:descAdicional,
-                codigoExcepcion:"0",
+                codigoExcepcion:0,
                 cafc:null,
-                leyenda:"",
+                leyenda:leyenda,
                 usuario:usuarioLogin,
                 codigoDocumentoSector:1
             },
             detalle:arregloCarrito
         }
     }
+
+    console.log(JSON.stringify(obj))
+
+    /*$.ajax({
+        type:"POST",
+        url:host+"api/CompraVenta/recepcion",
+        data:JSON.stringify(obj),
+        cache:false,
+        contentType:"application/json",
+        processData:false,
+        success:function(data){
+            console.log(data)
+        }
+    })*/
+
+
+  }else{
+    $("#panelInfo").before("<span class='text-danger'>Asegurese de llenar todos los campos!!!</span><br>")
+  }
 }
