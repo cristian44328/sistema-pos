@@ -7,102 +7,11 @@ var token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTdXBlcmppY2hvMzMiLCJj
 var rsEmpresa="NEOMAC SRL"
 var telEmpresa="9422560"
 var dirEmpresa="Calle Pucara 129 AVENIDA 7MO ANILLO NRO. 7550 ZONA/BARRIO: TIERRAS NUEVAS UV: 0135 MZA: 007"
-var cufd="";
-var codigoControlCufd="";
-var fechaVigCufd="";
-var leyenda="";
+var cufd=""
+var codControlCufd=""
+var fechaVigCufd=""
+var leyenda=""
 
-function MNuevoFactura(){
-
-    $("#modal-default").modal("show")
-
-    var obj=""
-    $.ajax({
-        type:"POST",
-        url:"vista/factura/fNuevoFactura.php",
-        data:obj,
-        success:function(data){
-            $("#content-default").html(data)
-        }
-    })
-}
-
-function regFactura(){
-    
-    var formData=new FormData($("#FRegFactura")[0])
-
-        $.ajax({
-            type:"POST",
-            url:"controlador/facturaControlador.php?ctrRegFactura",
-            data:formData,
-            cache:false,
-            contentType:false,
-            processData:false,
-            success:function(data){
-
-              if(data == "ok"){
-
-                Swal.fire({
-                    title: "Factura registrado",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 1000
-                  })
-
-                  setTimeout(function(){
-                    location.reload()
-                  },1200)
-
-              }else{
-                Swal.fire({
-        
-                    title: "Error!",
-                    icon: "error",
-                    showConfirmButton: false,
-                    timer: 1000
-                  })
-              }
-
-            }
-        })
-}
-
-function MEliFactur(id){
-
-    var obj={
-        id:id
-    }
-
-    swal.fire({
-        title:"Estas seguro de eliminar esta factura?",
-        showDenyButton:true,
-        showCancelButton:false,
-        confirmButtonText:'confirmar',
-        denyButtonText:'cancelar'
-    }).then((result)=>{
-        if(result.isConfirmed){
-            $.ajax({
-                type:"POST",
-                url:"controlador/facturaControlador.php?ctrEliFactura",
-                data:obj,
-                success:function(data){
-                 if(data=="ok"){
-                    location.reload()
-                 }else{
-                    Swal.fire({
-                        
-                        icon: "error",
-                        showConfirmButton: false,
-                        title: "error",
-                        text: "La factura no pudo ser eliminada",
-                        timer: 1000
-                      })
-                 }
-               }
-            })
-        }
-    })
-}
 
 function verificarComunicacion(){
     var obj=""
@@ -153,6 +62,7 @@ function busCliente(){
                 document.getElementById("emailCliente").value=data["email_cliente"];
             }
             document.getElementById("rsCliente").value=data["razon_social_cliente"];
+            document.getElementById("idCliente").value=data["id_cliente"];
             numFactura();
         }
     })
@@ -330,7 +240,7 @@ function solicitudCufd(){
             success:function(data){
                 //console.log(data)
                 cufd=data["codigo"]
-                codigoControlCufd=data["codigoControl"]
+                codControlCufd=data["codigoControl"]
                 fechaVigCufd=data["fechaVigencia"]
 
                 resolve(cufd)
@@ -350,7 +260,7 @@ function registrarNuevoCufd(){
             var obj={
                 "cufd":cufd,
                 "fechaVigCufd":fechaVigCufd,
-                "codControlCufd":codigoControlCufd
+                "codControlCufd":codControlCufd
             }
         
             $.ajax({
@@ -401,6 +311,19 @@ function verificarVigenciaCufd(){
             }       
         }
     })
+}
+/*====================================
+Transformar fecha con formato iso8601
+====================================*/
+function TransformarFecha(fechaISO){
+    let fecha_iso=fechaISO.split("T")
+    let hora_iso=fecha_iso[1].split(".")
+
+    let fecha=fecha_iso[0]
+    let hora=hora_iso[0]
+
+    let fecha_hora=fecha+" "+hora
+    return fecha_hora
 }
 
 /*===============
@@ -459,7 +382,7 @@ function emitirFactura(){
     let totApagar=parseInt(document.getElementById("totApagar").value)
     let descAdicional=parseFloat(document.getElementById("descAdicional").value)
     let subtotal=parseInt(document.getElementById("subtotal").value)
-    let usuarioLogin=document.getElementById("usuarioLogin").value
+    let usuarioLog=document.getElementById("usuarioLogin").innerHTML
 
     let actEconomica=document.getElementById("actEconomica").value
     let emailCliente=document.getElementById("emailCliente").value
@@ -480,7 +403,7 @@ function emitirFactura(){
         archivo:null,
         fechaEnvio:fechaFactura,
         hashArchivo:"",
-        codigoControl:codigoControlCufd,
+        codigoControl:codControlCufd,
         factura:{
             cabecera:{
                 nitEmisor:nitEmpresa,
@@ -511,16 +434,16 @@ function emitirFactura(){
                 codigoExcepcion:0,
                 cafc:null,
                 leyenda:leyenda,
-                usuario:usuarioLogin,
+                usuario:usuarioLog,
                 codigoDocumentoSector:1
             },
             detalle:arregloCarrito
         }
     }
 
-    console.log(JSON.stringify(obj))
+    //console.log(JSON.stringify(obj))
 
-    /*$.ajax({
+    $.ajax({
         type:"POST",
         url:host+"api/CompraVenta/recepcion",
         data:JSON.stringify(obj),
@@ -528,12 +451,84 @@ function emitirFactura(){
         contentType:"application/json",
         processData:false,
         success:function(data){
-            console.log(data)
+            //console.log(data)
+            if(data["codigoResultado"]!=908){
+                $("#panelInfo").before("<span class='text-danger'>Error, Factura no emitida!!!</span><br>")
+            }else{
+                $("#panelInfo").before("<span class='text-success'>Registrando Factura ....</span><br>")
+
+                let datos={
+                    codigoResultado:data["codigoResultado"],
+                    codigoRecepcion:data["codigoRecepcion"],
+                    cuf:data["datoAdicional"]["cuf"],
+                    sentDate:data["datoAdicional"]["sentDate"],
+                    xml:data["datoAdicional"]["xml"]
+                }
+                registrarFactura(datos)
+            }
         }
-    })*/
-
-
+    })
   }else{
     $("#panelInfo").before("<span class='text-danger'>Asegurese de llenar todos los campos!!!</span><br>")
   }
+}
+
+function registrarFactura(datos){
+    let numFactura=document.getElementById("numFactura").value
+    let idCliente=document.getElementById("idCliente").value
+    let subtotal=parseInt(document.getElementById("subtotal").value)
+    let descAdicional=parseFloat(document.getElementById("descAdicional").value)
+    let totApagar=parseInt(document.getElementById("totApagar").value)
+    let fechaEmision=TransformarFecha(datos["sentDate"])
+    let idUsuario=document.getElementById("idUsuario").value
+    let usuarioLog=document.getElementById("usuarioLogin").innerHTML
+
+    let obj={
+        "codFactura":numFactura,
+        "idCliente":idCliente,
+        "detalle":JSON.stringify(arregloCarrito),
+        "neto":subtotal,
+        "descuento":descAdicional,
+        "total":totApagar,
+        "fecha":fechaEmision,
+        "cufd":cufd,
+        "cuf":datos["cuf"],
+        "xml":datos["xml"],
+        "idUsuario":idUsuario,
+        "usuario":usuarioLog,
+        "leyenda":leyenda
+    }
+
+    $.ajax({
+        type:"POST",
+        url:"controlador/facturaControlador.php?ctrRegFactura",
+        data:obj,
+        cache:false,
+        success:function(data){
+            //console.log(data)
+            if(data == "ok"){
+
+                Swal.fire({
+                    title: "Factura registrada",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1000
+                  })
+
+                  setTimeout(function(){
+                    location.reload()
+                  },1200)
+
+              }else{
+                Swal.fire({
+        
+                    title: "Error de Registro",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+              }
+        }
+    })
+
 }

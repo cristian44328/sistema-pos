@@ -19,13 +19,18 @@ class ModeloFactura{
         $neto=$data["neto"];
         $descuento=$data["descuento"];
         $total=$data["total"];
-        $puntoVenta=$data["puntoVenta"];
+        $fecha=$data["fecha"];
+        $cufd=$data["cufd"];
+        $cuf=$data["cuf"];
+        $xml=$data["xml"];
+        $idUsuario=$data["idUsuario"];
         $usuario=$data["usuario"];
         $leyenda=$data["leyenda"];
 
         $stmt=Conexion::conectar()->prepare("insert into factura(cod_factura, id_cliente, detalle, neto, descuento, total,
-        id_punto_venta, usuario, leyenda)
-        values('$codFactura', '$cliente', '$detalle', '$neto', '$descuento', '$total', '$puntoVenta', '$usuario', '$leyenda')");
+        fecha_emision, cufd, cuf, xml, id_usuario, usuario, leyenda)
+        values('$codFactura', '$cliente', '$detalle', '$neto', '$descuento', '$total', '$fecha', '$cufd', '$cuf', '$xml', '$idUsuario',
+        '$usuario', '$leyenda')");
 
         if($stmt->execute()){
             return "ok";

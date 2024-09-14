@@ -29,12 +29,16 @@ class ControladorFactura{
 
         $data=array(
             "codFactura"=>$_POST["codFactura"],
-            "cliente"=>$_POST["cliente"],
+            "cliente"=>$_POST["idCliente"],
             "detalle"=>$_POST["detalle"],
             "neto"=>$_POST["neto"],
             "descuento"=>$_POST["descuento"],
             "total"=>$_POST["total"],
-            "puntoVenta"=>$_POST["puntoVenta"],
+            "fecha"=>$_POST["fecha"],
+            "cufd"=>$_POST["cufd"],
+            "cuf"=>$_POST["cuf"],
+            "xml"=>$_POST["xml"],
+            "idUsuario"=>$_POST["idUsuario"],
             "usuario"=>$_POST["usuario"],
             "leyenda"=>$_POST["leyenda"]
         );

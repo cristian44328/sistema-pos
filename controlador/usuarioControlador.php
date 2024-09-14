@@ -27,7 +27,7 @@ class ControladorUsuario{
 
                 $_SESSION["login"]=$resultado["login_usuario"];
                 $_SESSION["perfil"]=$resultado["perfil"];
-                $_SESSION["idUsuario"]=$resultado["idUsuario"];
+                $_SESSION["idUsuario"]=$resultado["id_usuario"];
                 $_SESSION["ingreso"]="ok";
                 
                 date_default_timezone_set("America/La_Paz");
