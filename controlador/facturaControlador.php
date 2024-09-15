@@ -4,7 +4,6 @@ $ruta=parse_url($_SERVER["REQUEST_URI"]);
 
 if(isset($ruta["query"])){
     if($ruta["query"]=="ctrRegFactura"||
-    $ruta["query"]=="ctrEditFactura"||
     $ruta["query"]=="ctrNumFactura"||
     $ruta["query"]=="ctrNuevoCufd"||
     $ruta["query"]=="ctrUltimoCufd"||
