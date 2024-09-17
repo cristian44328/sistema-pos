@@ -8,7 +8,7 @@ if(isset($ruta["query"])){
     $ruta["query"]=="ctrNuevoCufd"||
     $ruta["query"]=="ctrUltimoCufd"||
     $ruta["query"]=="ctrLeyenda"||
-    $ruta["query"]=="ctrEliFactura"){
+    $ruta["query"]=="ctrAnularFactura"){
         $metodo=$ruta["query"];
         $factura=new ControladorFactura();
         $factura->$metodo();
@@ -52,13 +52,12 @@ class ControladorFactura{
         return $respuesta;
     }
 
-    static public function ctrEliFactura(){
+    static public function ctrAnularFactura(){
         require "../modelo/facturaModelo.php";
 
-        $id=$_POST["id"];
-        $respuesta=ModeloFactura::mdlEliFactura($id);
+        $cuf=$_POST["cuf"];
+        $respuesta=ModeloFactura::mdlAnularFactura($cuf);
         echo $respuesta;
-
     }
 
     static public function ctrNumFactura(){

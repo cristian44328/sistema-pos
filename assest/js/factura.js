@@ -112,12 +112,14 @@ function busProducto(){
 }
 
 function calcularPrePro(){
+    
     let cantProducto=parseInt(document.getElementById("cantProducto").value)
     let descProducto=parseFloat(document.getElementById("descProducto").value)
     let preUnitario=parseFloat(document.getElementById("preUnitario").value)
 
-    let prePro=preUnitario-descProducto
-    document.getElementById("preTotal").value=prePro*cantProducto
+    let prePro=(preUnitario*cantProducto)-descProducto
+
+    document.getElementById("preTotal").value=prePro
 }
 
 /*================
@@ -532,9 +534,7 @@ function registrarFactura(datos){
     })
 
 }
-/*===============
-Modal ver factura
-================*/
+
 function MVerFactura(id){
 
     $("#modal-xl").modal("show")
@@ -546,6 +546,90 @@ function MVerFactura(id){
         data:obj,
         success:function(data){
             $("#content-xl").html(data)
+        }
+    })
+}
+
+function MEliminarFactura(cuf){
+    let obj={
+        codigoAmbiente:2,
+        codigoPuntoVenta:0,
+        codigoPuntoVentaSpecified:true,
+        codigoSistema:codSistema,
+        codigoSucursal:0,
+        nit:nitEmpresa,
+        codigoDocumentoSector:1,
+        codigoEmision:1,
+        codigoModalidad:2,
+        cufd:cufd,
+        cuis:cuis,
+        tipoFacturaDocumento:1,
+        codigoMotivo:1,
+        cuf:cuf
+    }
+    swal.fire({
+        title:"Estas seguro de eliminar est Factura?",
+        showDenyButton:true,
+        showCancelButton:false,
+        confirmButtonText:'confirmar',
+        denyButtonText:'cancelar'
+    }).then((result)=>{
+        if(result.isConfirmed){
+            $.ajax({
+                type:"POST",
+                url:host+"api/CompraVenta/anulacion",
+                data:JSON.stringify(obj),
+                cache:false,
+                contentType:"application/json",
+                processData:false,
+                success:function(data){
+                 if(data["codigoEstado"]===905){
+                    //anular en base de datos
+                    anularFactura(cuf)
+                    
+                 }else{
+                    swal.fire({
+                        icon:'error',
+                        title:"Error",
+                        Text:"Anulacion Rechazada",
+                        showConfirmButton:"false",
+                        timer:1100
+                    })
+                 }
+               }
+            })
+        }
+    })
+}
+
+function anularFactura(cuf){
+    let obj={
+        cuf:cuf
+    }
+    $.ajax({
+        type:"POST",
+        url:"controlador/facturaControlador.php?ctrAnularFactura",
+        data:obj,
+        success:function(data){
+            //aviso de confirmacion
+            if(data===ok){
+                swal.fire({
+                    icon:'success',
+                    title:"Esta Factura ha sido Anulada",
+                    showConfirmButton:"false",
+                    timer:1100
+                })
+                setTimeout(function(){
+                    location.reload()
+                }, 1200)
+            }else{
+                swal.fire({
+                    icon:'error',
+                    title:"Error al Anular Registro",
+                    showConfirmButton:"false",
+                    timer:1100
+                })
+            }
         }
     })
 }
