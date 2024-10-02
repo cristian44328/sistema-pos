@@ -82,10 +82,19 @@ $producto=json_decode($factura["detalle"], true);
                     <?php
                 }
                 ?>
-                <tr>
-                    <td colspan="4"><b>Total</b></td>
+                    <tr>
+                    <td colspan="4"><b>Total Neto</b></td>
                     <td><?php echo $factura["neto"]; ?></td>
-                </tr>
+                    </tr>
+                    <tr>
+                    <td colspan="4"><b>Descuento</b></td>
+                    <td><?php echo $factura["descuento"]; ?></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4"><b>Total</b></td>
+                    <td><?php echo $factura["total"]; ?></td>
+                    </tr>
+                    
             </tbody>
         </table>
     </div>
